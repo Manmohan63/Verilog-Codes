@@ -1,0 +1,45 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_01094AD8 .scope module, "AND_2_gate_tb" "AND_2_gate_tb" 2 1;
+ .timescale 0 0;
+v01092FE0_0 .var "a", 0 0;
+v01093038_0 .var "b", 0 0;
+v01097EF0_0 .net "c", 0 0, L_01097240; 1 drivers
+S_01097160 .scope module, "Instance0" "AND_2_gate" 2 5, 3 1, S_01094AD8;
+ .timescale 0 0;
+L_01097240 .functor AND 1, v01092FE0_0, v01093038_0, C4<1>, C4<1>;
+v010981F0_0 .net "a", 0 0, v01092FE0_0; 1 drivers
+v010971E8_0 .net "b", 0 0, v01093038_0; 1 drivers
+v01092F88_0 .alias "c", 0 0, v01097EF0_0;
+    .scope S_01094AD8;
+T_0 ;
+    %set/v v01092FE0_0, 0, 1;
+    %set/v v01093038_0, 0, 1;
+    %delay 1, 0;
+    %set/v v01092FE0_0, 0, 1;
+    %set/v v01093038_0, 1, 1;
+    %delay 1, 0;
+    %set/v v01092FE0_0, 1, 1;
+    %set/v v01093038_0, 0, 1;
+    %delay 1, 0;
+    %set/v v01092FE0_0, 1, 1;
+    %set/v v01093038_0, 1, 1;
+    %end;
+    .thread T_0;
+    .scope S_01094AD8;
+T_1 ;
+    %vpi_call 2 15 "$monitor", "T=%t |a=%b |b=%b |c(and)=%b", $time, v01092FE0_0, v01093038_0, v01097EF0_0;
+    %vpi_call 2 16 "$dumpfile", "ag_dump.vcd";
+    %vpi_call 2 17 "$dumpvars";
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "AND_2_gate_tb.v";
+    "AND_2_gate.v";

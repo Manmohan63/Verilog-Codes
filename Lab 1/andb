@@ -1,0 +1,60 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_01293980 .scope module, "AND_2_behavioral_tb" "AND_2_behavioral_tb" 2 3;
+ .timescale 0 0;
+v008F3468_0 .var "A", 0 0;
+v008F34C0_0 .var "B", 0 0;
+v008F3518_0 .net "Y", 0 0, v01292918_0; 1 drivers
+S_01293A08 .scope module, "Instance0" "AND_2_behavioral" 2 6, 3 1, S_01293980;
+ .timescale 0 0;
+v01292868_0 .net "A", 0 0, v008F3468_0; 1 drivers
+v012928C0_0 .net "B", 0 0, v008F34C0_0; 1 drivers
+v01292918_0 .var "Y", 0 0;
+E_008F1DB0 .event edge, v012928C0_0, v01292868_0;
+    .scope S_01293A08;
+T_0 ;
+    %wait E_008F1DB0;
+    %load/v 8, v01292868_0, 1;
+    %load/v 9, v012928C0_0, 1;
+    %and 8, 9, 1;
+    %jmp/0xz  T_0.0, 8;
+    %set/v v01292918_0, 1, 1;
+    %jmp T_0.1;
+T_0.0 ;
+    %set/v v01292918_0, 0, 1;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_01293980;
+T_1 ;
+    %delay 2, 0;
+    %set/v v008F3468_0, 0, 1;
+    %set/v v008F34C0_0, 0, 1;
+    %delay 2, 0;
+    %set/v v008F3468_0, 0, 1;
+    %set/v v008F34C0_0, 1, 1;
+    %delay 2, 0;
+    %set/v v008F3468_0, 1, 1;
+    %set/v v008F34C0_0, 0, 1;
+    %delay 2, 0;
+    %set/v v008F3468_0, 1, 1;
+    %set/v v008F34C0_0, 1, 1;
+    %end;
+    .thread T_1;
+    .scope S_01293980;
+T_2 ;
+    %vpi_call 2 16 "$monitor", "%t | A = %d| B = %d| Y = %d", $time, v008F3468_0, v008F34C0_0, v008F3518_0;
+    %vpi_call 2 17 "$dumpfile", "ab_dump.vcd";
+    %vpi_call 2 18 "$dumpvars";
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "AND_2_behavioral_tb.v";
+    "./AND_2_behavioral.v";
